@@ -56,21 +56,7 @@ void delay_osschedunlock(void)
 	OSSchedUnlock(&err);						//UCOSIII的方式,恢复调度
 #else											//否则UCOSII
 	OSSchedUnlock();							//UCOSII的方式,恢复调度
-#endif
-}
 
-//调用OS自带的延时函数延时
-//ticks:延时的节拍数
-void delay_ostimedly(u32 ticks)
-{
-#ifdef CPU_CFG_CRITICAL_METHOD
-	OS_ERR err; 
-	OSTimeDly(ticks,OS_OPT_TIME_PERIODIC,&err);	//UCOSIII延时采用周期模式
-#else
-	OSTimeDly(ticks);							//UCOSII延时
-#endif 
-}
- 
 //systick中断服务函数,使用ucos时用到
 void SysTick_Handler(void)
 {	
