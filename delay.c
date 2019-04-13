@@ -37,28 +37,6 @@ static u16 fac_ms=0;							//ms延时倍乘数,在ucos下,代表每个节拍的ms数
 #endif
 
 
-//us级延时时,关闭任务调度(防止打断us级延迟)
-void delay_osschedlock(void)
-{
-#ifdef CPU_CFG_CRITICAL_METHOD   				//使用UCOSIII
-	OS_ERR err; 
-	OSSchedLock(&err);							//UCOSIII的方式,禁止调度，防止打断us延时
-#else											//否则UCOSII
-	OSSchedLock();								//UCOSII的方式,禁止调度，防止打断us延时
-#endif
-}
-
-//us级延时时,恢复任务调度
-void delay_osschedunlock(void)
-{	
-#ifdef CPU_CFG_CRITICAL_METHOD   				//使用UCOSIII
-	OS_ERR err; 
-	OSSchedUnlock(&err);						//UCOSIII的方式,恢复调度
-#else											//否则UCOSII
-	OSSchedUnlock();							//UCOSII的方式,恢复调度
-#endif
-}
-
 //调用OS自带的延时函数延时
 //ticks:延时的节拍数
 void delay_ostimedly(u32 ticks)
